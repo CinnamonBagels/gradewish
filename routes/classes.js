@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
 var User = require('../Schemas/users');
 var Assignment = require('../Schemas/assignment');
 var Class = require('../Schemas/class');
+var classList = require('../classList');
 
 exports.viewClasses = function(req, res) {
 	var classObject;

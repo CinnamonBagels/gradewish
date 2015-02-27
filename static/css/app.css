@@ -24,6 +24,13 @@ body {
   color: #E7E3E8;
 }
 
+.assignmentName {
+  font-weight: bold;
+}
+
+.goal > span {
+  text-decoration: underline;
+}
 #title {
 	min-height: 30%;
 }
@@ -32,6 +39,9 @@ body {
   margin-top: 10px;
 }
 
+#current-grade, #no-assignment {
+  font-weight: bold;
+}
 .button.large {
     padding-top: 3.375rem;
     padding-right: 6.75rem;
