@@ -17,24 +17,24 @@
 			<div class="panel-heading">Overview</div>
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
 						{{#if currentGrade}}
-							<span id="current-grade">Current Grade ≈ {{currentGrade}} %</span>
+							<span id="current-grade">Current Class Grade ≈ {{currentGrade}} %</span>
 						{{else}}
 							<span id="no-assignments">Add assignments below to calculate your grade. At least one assignment must be graded for us to update your score.</span>
 						{{/if}}
 					</div>
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+{{!-- 					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 						{{#if impossible}}
 							<span class="impossible">At your current percentage, you will need extra-credit assignments to acheive your desired grade.</span>
 						{{/if}}
 						{{#if overacheive}}
 						<span class="overacheive">At your current percentage, your grade will not fall below your desired grade.</span>
 						{{/if}}
-					</div>
+					</div> --}}
 				</div>
 				<div class="row">
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 ">
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
 						<div class="form-inline">
 							Desired Grade 
 							<div class="input-group">
