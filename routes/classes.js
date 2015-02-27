@@ -144,7 +144,10 @@ exports.viewClass = function(req, res) {
 
 exports.addClass = function(req, res) {
 	var fields = req.body;
-	var newClass = fields.className;
+	var courseNumber = fields.courseNumber;
+	var departmentName = fields.departmentName;
+	var newClass = departmentName.toUpperCase().replace(' ', '').concat(courseNumber.replace(' ', ''));
+	console.log(newClass);
 	var currentClasses = [];
 	var classExists = false;
 	var classObject;
@@ -188,7 +191,8 @@ exports.addClass = function(req, res) {
 							});
 						} else {
 							res.send({
-								ok : systemMessages.status.ok
+								ok : systemMessages.status.ok,
+								className : newClass
 							});
 						}
 					})
