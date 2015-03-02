@@ -124,7 +124,13 @@ exports.viewClass = function(req, res) {
 											};
 										}
 
-										res.render('class', classPageObject);
+										var random_num = Math.random();
+
+										if(random_num > 0.5){
+										  res.render("class", classPageObject);
+										}else{
+										  res.render("class_alternate", classPageObject);
+										}
 									}
 								}
 							});
