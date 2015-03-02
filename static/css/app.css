@@ -19,6 +19,13 @@ body {
 	color: #E7E3E8;
 }
 
+.information {
+  
+}
+.close {
+  font-size: 3.5em;
+}
+
 .subtitle {
   font-family: 'Pacifico', cursive; 
   color: #E7E3E8;

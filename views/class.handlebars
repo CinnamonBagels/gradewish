@@ -100,11 +100,30 @@
 								{{/if}}
 							</div>
 						</div>
+
+						<div class="row">
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<div class="information">
+									{{#unless percentage}}
+										{{#if ../../impossible}}
+										**Extra credit required.
+										{{/if}}
+										{{#if ../../overacheive}}
+										**Not required for goal.
+										{{/if}}
+									{{/unless}}
+								</div>
+							</div>
+						</div>
 					</div>
 					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-						<div class="btn-group" role="group" aria-label="...">
-						  <button type="button" data-toggle="modal" data-target="#editAssignmentModal{{this._id}}" class="btn btn-info editAssignmentButton">Edit</button>
-						  <button type="button" class="btn btn-danger deleteAssignmentButton" data-toggle="modal" data-target="#deleteAssignmentModal" for-assignment="{{assignment}}" for-class="{{className}}">X</button>
+						<div class="row">
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<div class="btn-group" role="group" aria-label="...">
+								  <button type="button" data-toggle="modal" data-target="#editAssignmentModal{{this._id}}" class="btn btn-info editAssignmentButton">Edit</button>
+								  <button type="button" class="btn btn-danger deleteAssignmentButton" data-toggle="modal" data-target="#deleteAssignmentModal" for-assignment="{{assignment}}" for-class="{{className}}">X</button>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -290,26 +309,26 @@
 	   		   				console.log('Updated assignment weight!');
 	   				   		$.post('/updateAssignmentGoal', { className : className, assignmentPercentages : assignmentPercentages, assignmentWeights : assignmentWeights, desiredGrade : desiredGrade }, function(data) {
 	   				   			if(data.ok) {
-	   				   				var grades = $('.grade');
-	   				   				var goals = $('.goal');
+	   				   				// var grades = $('.grade');
+	   				   				// var goals = $('.goal');
 
-	   				   				for(var i = 0; i < grades.length; i++) {
-	   				   					if($(grades[i]).text() === '') {
-	   				   						$(goals[i]).empty();
-	   				   						$(goals[i]).append('<span>' + data.goal + '</span>')
-	   				   					}
-	   				   				}
-	   				   				$('.grade[for-assignment="' + assignment + '"]').text(percentage);
-	   				   				if(data.currentGrade) {
-	   				   					$('#current-grade, #no-assignments').text('Current Class Grade ≈ ' + data.currentGrade + '%');
-	   				   				} else {
-	   				   					$('#current-grade, #no-assignments').text('Add assignments below to calculate your grade. At least one assignment must be graded for us to update your score.');
-	   				   				}
-	   				   				if(emptyPercentage) {
-	   				   					$('.goal[for-assignment="' + assignment + '"]>span').replaceWith('<span>' + data.goal + '</span>');
-	   				   				} else {
-	   				   					$('.goal[for-assignment="' + assignment + '"]>span').replaceWith('<span>Completed</span>');
-	   				   				}
+	   				   				// for(var i = 0; i < grades.length; i++) {
+	   				   				// 	if($(grades[i]).text() === '') {
+	   				   				// 		$(goals[i]).empty();
+	   				   				// 		$(goals[i]).append('<span>' + data.goal + '</span>')
+	   				   				// 	}
+	   				   				// }
+	   				   				// $('.grade[for-assignment="' + assignment + '"]').text(percentage);
+	   				   				// if(data.currentGrade) {
+	   				   				// 	$('#current-grade, #no-assignments').text('Current Class Grade ≈ ' + data.currentGrade + '%');
+	   				   				// } else {
+	   				   				// 	$('#current-grade, #no-assignments').text('Add assignments below to calculate your grade. At least one assignment must be graded for us to update your score.');
+	   				   				// }
+	   				   				// if(emptyPercentage) {
+	   				   				// 	$('.goal[for-assignment="' + assignment + '"]>span').replaceWith('<span>' + data.goal + '</span>');
+	   				   				// } else {
+	   				   				// 	$('.goal[for-assignment="' + assignment + '"]>span').replaceWith('<span>Completed</span>');
+	   				   				// }
 	   				   				$(that).closest('.modal').modal('hide');
 	   				   				location.reload();
 	   				   			} else if(data.err) {
@@ -359,13 +378,34 @@
 	   var assignmentWeights = [];
 	   var className = $('#className').text();
 
-	   for(var i = 0; i < $('.assignmentWeightInput').length; i++) {
-	   	assignmentWeights.push($('.assignmentWeightInput')[i].value);
-	   }
 
-	   for(var i = 0; i < $('.gradeGivenInput').length; i++) {
-		assignmentPercentages.push($('.gradeGivenInput')[i].value);
-	   }
+	   $('.assignmentWeightInput').each(function(index, value) {
+	   	if(!($(this).attr('for-assignment') === assignmentToBeDeleted)) {
+	   		assignmentWeights.push($(this).val());
+	   	}
+	   })
+
+	   $('.gradeGivenInput').each(function(index, value) {
+	   	if(!($(this).attr('for-assignment') === assignmentToBeDeleted)) {
+	   		assignmentPercentages.push($(this).val());
+	   	}
+	   })
+	  //  for(var i = 0; i < $('.assignmentWeightInput').length; i++) {
+	  //  	if(!($('.assignmentWeightInput')[i].attr('for-assignment') === 'assignmentToBeDeleted')) {
+	  //  		assignmentWeights.push($('.assignmentWeightInput')[i].value);
+	  //  	}
+	  //  }
+
+	  //  for(var i = 0; i < $('.gradeGivenInput').length; i++) {
+	  //  	if(!($('.gradeGivenInput')[i].attr('for-assignment') === 'assignmentToBeDeleted')) {
+			// assignmentPercentages.push($('.gradeGivenInput')[i].value);
+	  //  	}
+	  //  }
+
+
+	   /*
+	   Instead of for(...) you would do the jquery version $('.assignmentWeightInput').each(function(index, value) { ... });
+	    */
 
 		$.post('/deleteAssignment', { assignmentName : assignmentToBeDeleted, className : forClass }, function(data) {
 			if(data.ok) {
