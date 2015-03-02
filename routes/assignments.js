@@ -201,8 +201,8 @@ exports.updateAssignmentGoal = function(req, res) {
 		goalTotal = desiredGrade - totalPoints;
 
 		necessaryPoints = goalTotal / undoneWeight;
-		necessaryPoints = (necessaryPoints * 100).toPrecision(4);
-		currentGrade = (currentGrade * 100).toPrecision(4);
+		necessaryPoints = Math.round(necessaryPoints * 100);
+		currentGrade = Math.round(currentGrade * 100);
 		console.log(currentGrade, necessaryPoints);
 
 		fields.assignmentPercentages.forEach(function(percentage) {
