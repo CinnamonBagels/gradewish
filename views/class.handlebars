@@ -283,7 +283,7 @@
 	$('.xDelButtonA, .backDelButtonA').click(function(event) {
 		//console.log("xButtonA clicked");
 		if (modalClicked) {
-			woopra.trackconsole.log("Version A: User closed delete modal");
+			woopra.track("Version A: User closed delete modal");
 			//console.log
 		}
 		modalClicked = false;
