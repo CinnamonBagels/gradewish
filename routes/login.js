@@ -34,5 +34,6 @@ exports.validateLogin = function(req, res) {
 
 exports.logout = function(req, res) {
 	req.session.email = null;
+	req.session.version = null;
 	res.redirect('/');
 }
