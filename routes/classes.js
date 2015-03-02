@@ -45,9 +45,12 @@ exports.viewClass = function(req, res) {
 	var classObject;
 	var currentGrade;
 	var assignmentPercentage;
+	var classPageVersion;
 	if(!req.session.email) {
 		res.redirect('/login');
 	} else {
+		//class to be rendered
+		classPageVersion = req.session.version === 'A' ? 'class' : 'class_alternate';
 		assignments = [];
 		User.findOne({ email : req.session.email }, function(err, user) {
 			if(err) {
@@ -124,13 +127,7 @@ exports.viewClass = function(req, res) {
 											};
 										}
 
-										var random_num = Math.random();
-
-										if(random_num > 0.5){
-										  res.render("class", classPageObject);
-										}else{
-										  res.render("class_alternate", classPageObject);
-										}
+										res.render(classPageVersion, classPageObject);
 									}
 								}
 							});

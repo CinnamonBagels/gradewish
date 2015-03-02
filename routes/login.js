@@ -16,6 +16,7 @@ exports.validateLogin = function(req, res) {
 		if(data) {
 			if(data.password === fields.password) {
 				req.session.email = data.email;
+				req.session.verison = Math.floor(Math.random() * 10) < 5 ? 'A' : 'B';
 				res.redirect('/classes');
 			} else {
 				res.send({
