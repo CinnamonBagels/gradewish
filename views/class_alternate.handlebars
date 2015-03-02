@@ -100,6 +100,20 @@
 								{{/if}}
 							</div>
 						</div>
+						<div class="row">
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<div class="information">
+									{{#unless percentage}}
+										{{#if ../../impossible}}
+										**Extra credit required.
+										{{/if}}
+										{{#if ../../overacheive}}
+										**Not required for goal.
+										{{/if}}
+									{{/unless}}
+								</div>
+							</div>
+						</div>
 					</div>
 					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 						<div class="btn-group" role="group" aria-label="...">
@@ -399,13 +413,17 @@
 	   var assignmentWeights = [];
 	   var className = $('#className').text();
 
-	   for(var i = 0; i < $('.assignmentWeightInput').length; i++) {
-	   	assignmentWeights.push($('.assignmentWeightInput')[i].value);
-	   }
+	   $('.assignmentWeightInput').each(function(index, value) {
+	   	if(!($(this).attr('for-assignment') === assignmentToBeDeleted)) {
+	   		assignmentWeights.push($(this).val());
+	   	}
+	   })
 
-	   for(var i = 0; i < $('.gradeGivenInput').length; i++) {
-		assignmentPercentages.push($('.gradeGivenInput')[i].value);
-	   }
+	   $('.gradeGivenInput').each(function(index, value) {
+	   	if(!($(this).attr('for-assignment') === assignmentToBeDeleted)) {
+	   		assignmentPercentages.push($(this).val());
+	   	}
+	   })
 
 		$.post('/deleteAssignment', { assignmentName : assignmentToBeDeleted, className : forClass }, function(data) {
 			if(data.ok) {
