@@ -24,7 +24,7 @@ exports.addAssignment = function(req, res) {
 		Assignment.findOne({ email : req.session.email, className : fields.className, assignment : fields.assignmentName }, function(err, assignment) {
 			if(assignment) {
 				res.send({
-					err : 'Your assignments must have unique names'
+					err : 'Your assignments must have unique names.'
 				})
 			} else {
 				Assignment.find({ email : req.session.email, className : fields.className }, function(err, data) {
@@ -437,6 +437,8 @@ exports.updateAssignment = function(req, res) {
 }
 
 exports.updateAssignmentName = function(req, res) {
+	//fields.newAssignmentName is the name that you want to change to
+	//fields.oldAssignmentName is the name that it was before changing.
 	var fields = req.body;
 	if(fields.newAssignmentName.trim().length === 0) {
 		res.send({
@@ -444,7 +446,7 @@ exports.updateAssignmentName = function(req, res) {
 		});
 	} else {
 		Assignment.findOne({ email : req.session.email, assignment : fields.newAssignmentName, className : fields.className }, function(err, oldAssignment) {
-			if(oldAssignment && (oldAssignment.assignment === fields.newAssignmentName)) {
+			if(oldAssignment && (oldAssignment.assignment !== fields.oldAssignmentName)) {
 				res.send({
 					err : 'Your assignments must have unique names'
 				});
