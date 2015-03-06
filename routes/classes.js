@@ -50,7 +50,8 @@ exports.viewClass = function(req, res) {
 		res.redirect('/login');
 	} else {
 		//class to be rendered
-		classPageVersion = req.session.version === 'A' ? 'class' : 'class_alternate';
+		classPageVersion = 'class_alternate';
+		//classPageVersion = req.session.version === 'A' ? 'class' : 'class_alternate';
 		assignments = [];
 		User.findOne({ email : req.session.email }, function(err, user) {
 			if(err) {

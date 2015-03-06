@@ -8,6 +8,7 @@ var Class = require('../Schemas/class');
 exports.addAssignment = function(req, res) {
 	
 	var fields = req.body;
+	console.log(fields.className);
 	//email = req.session.email
 	//form fields = req.body = {}
 	if(fields.assignmentPercentage.match(/\D/)
@@ -28,7 +29,7 @@ exports.addAssignment = function(req, res) {
 			} else {
 				Assignment.find({ email : req.session.email, className : fields.className }, function(err, data) {
 					if(err) {
-						//console.log(err);
+						console.log(err);
 						res.send({
 							err : systemMessages.status.error
 						});
@@ -36,7 +37,7 @@ exports.addAssignment = function(req, res) {
 						if(fields.extraCredit) {
 							Class.findOne({ email : req.session.email, className : fields.className }, function(err, classDoc) {
 								if(err) {
-									//console.log(err);
+									console.log(err);
 									res.send({
 										err : systemMessages.status.error
 									});
@@ -55,7 +56,7 @@ exports.addAssignment = function(req, res) {
 
 										newAssignment.save(function(err) {
 											if(err) {
-												//console.log(err);
+												console.log(err);
 												res.send({
 													err : systemMessages.status.error
 												});
@@ -86,7 +87,7 @@ exports.addAssignment = function(req, res) {
 							} else {
 								Class.findOne({ email : req.session.email, className : fields.className }, function(err, classDoc) {
 									if(err) {
-										//console.log(err);
+										console.log(err);
 										res.send({
 											err : systemMessages.status.error
 										});
@@ -105,7 +106,7 @@ exports.addAssignment = function(req, res) {
 
 											newAssignment.save(function(err) {
 												if(err) {
-													//console.log(err);
+													console.log(err);
 													res.send({
 														err : systemMessages.status.error
 													});
@@ -116,7 +117,7 @@ exports.addAssignment = function(req, res) {
 												}
 											});
 										} else {
-											//console.log('cannot find classDoc');
+											console.log('cannot find classDoc');
 											res.send({
 												err : systemMessages.status.error
 											});
@@ -443,7 +444,7 @@ exports.updateAssignmentName = function(req, res) {
 		});
 	} else {
 		Assignment.findOne({ email : req.session.email, assignment : fields.newAssignmentName, className : fields.className }, function(err, oldAssignment) {
-			if(oldAssignment && oldAssignment.assignment !== fields.newAssignmentName) {
+			if(oldAssignment && (oldAssignment.assignment === fields.newAssignmentName)) {
 				res.send({
 					err : 'Your assignments must have unique names'
 				});

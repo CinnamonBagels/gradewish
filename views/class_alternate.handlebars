@@ -1,9 +1,4 @@
 <!doctype html>
-<div class="row" id="title">
-	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-		<span class="title" id="className">{{className}}</span>
-	</div>
-</div>
 
 <div class="row">
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-alert-box">
@@ -14,7 +9,7 @@
 <div class="row">
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<div class="panel panel-primary">
-			<div class="panel-heading">Overview</div>
+			<div class="panel-heading className">{{className}}</div>
 			<div class="panel-body">
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
@@ -56,11 +51,11 @@
 		<div class="panel panel-primary">
 			<div class="panel-heading">
 				<div class="row">
-					<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+					<div class="col-lg-9 col-md-9 col-sm-9 col-xs-8">
 						Assignments		
 					</div>
-					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-						<a data-toggle="modal" data-target="#addAssignmentModal" class="btn btn-success btn-block">+</a>
+					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 text-center">
+						<a data-toggle="modal" data-target="#addAssignmentModal" class="btn btn-success btn-block">Add</a>
 					</div>
 				</div>
 			</div>
@@ -124,12 +119,35 @@
 				</div>
 				<hr for-assignment="{{assignment}}">
 				{{/each}}
+				{{else}}
+				<div class="row information">
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+						Add all completed and upcoming assignments. <a data-toggle="modal" data-target="#whyModal">Why?</a>
+					</div>
+				</div>
 				{{/if}}
 			</div>
 		</div>
 	</div>
 </div>
 <!-- Modal -->
+
+<div class="modal fade" id="whyModal" tabindex="-1" role="dialog" aria-labelledby="why" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close xDelButtonB" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="why">Adding assignments</h4>
+      </div>
+      <div class="modal-body">
+       	<p>Add your completed assignments to calculate your current grade in the class. When you add your assignment, leave <b>Score</b> blank if it has not been graded yet. We will calculate your projected assignment goal for this assignment based on your desired class grade and graded assignments.</p>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-info" data-dismiss="modal" aria-label="Close">Sounds good!</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="modal fade" id="deleteAssignmentModal" tabindex="-1" role="dialog" aria-labelledby="deleteAssignment" aria-hidden="true">
   <div class="modal-dialog">
@@ -173,7 +191,7 @@
    				<input id="assignmentWeightInput" class="form-control" type="text" name="assignmentWeight" placeholder="Assignment Weight">	
 				<span class="input-group-addon">%</span>
 			</div>
-				<label for="assignmentPercentage">Percentage Given (Leave blank if not yet graded)</label>
+				<label for="assignmentPercentage">Score (Leave blank if not yet graded)</label>
 			<div class="input-group">
 				<input id="assignmentPercentageInput" class="form-control" type="text" name="assignmentPercentage" placeholder="Percentage Given">
 				<span class="input-group-addon">%</span>
@@ -223,7 +241,7 @@
 			</div>
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					<label for="gradeGivenInput">Percentage Given (Leave blank if not yet graded)</label>
+					<label for="gradeGivenInput">Score (Leave blank if not yet graded)</label>
 					<div class="input-group">
 						<input class="gradeGivenInput form-control" type="text" Placeholder="Percentage Given" for-assignment="{{assignment}}" for-class="{{className}}" value="{{percentage}}">
 						<span class="input-group-addon">%</span>
@@ -367,6 +385,7 @@
 	   				   				$(that).closest('.modal').modal('hide');
 	   				   				location.reload();
 	   				   			} else if(data.err) {
+	   				   				$('.alert-box[for-assignment="' + assignment + '"]').empty();
 	   				   				$('.alert-box[for-assignment="' + assignment + '"]').prepend('<div class="alert alert-warning alert-dismissible" role="alert">\
 	   					        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
 	   					      ' + data.err + '\
@@ -374,6 +393,7 @@
 	   				   			}
 	   				   		});
 	   		   			} else if(data.err) {
+	   		   				$('.alert-box[for-assignment="' + assignment + '"]').empty();
 	   				   		$('.alert-box[for-assignment="' + assignment + '"]').prepend('<div class="alert alert-warning alert-dismissible" role="alert">\
 	   					        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
 	   					      ' + data.err + '\
@@ -381,6 +401,7 @@
 	   		   			}
 	   		   		});
 	   		   	} else if(data.err) {
+	   		   		$('.alert-box[for-assignment="' + assignment + '"]').empty();
 	   		   		$('.alert-box[for-assignment="' + assignment + '"]').prepend('<div class="alert alert-warning alert-dismissible" role="alert">\
 	   			        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
 	   			      ' + data.err + '\
@@ -388,8 +409,8 @@
 	   		   	}
 	   		   });
 		   	} else {
-		   		console.log('failed');
-		   		$(that).closest('.alert-box').prepend('<div class="alert alert-warning alert-dismissible" role="alert">\
+		   		$('.alert-box[for-assignment="' + assignment + '"]').empty();
+		   		$('.alert-box[for-assignment="' + assignment + '"]').prepend('<div class="alert alert-warning alert-dismissible" role="alert">\
 			        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
 			      ' + data.err + '\
 			      </div>');
@@ -411,7 +432,7 @@
 		var desiredGrade = $('#desiredPercentageInput').val();
 	   var assignmentPercentages = [];
 	   var assignmentWeights = [];
-	   var className = $('#className').text();
+	   var className = $('.className').text();
 
 	   $('.assignmentWeightInput').each(function(index, value) {
 	   	if(!($(this).attr('for-assignment') === assignmentToBeDeleted)) {
@@ -429,9 +450,14 @@
 			if(data.ok) {
 				console.log($('.assignment[assignmentname="' + assignmentToBeDeleted + '"]'));
 				$('.assignment[assignmentname="' + assignmentToBeDeleted + '"]').remove();
-				$('hr[for-assignment	="' + assignmentToBeDeleted + '"]').remove();
+				$('hr[for-assignment="' + assignmentToBeDeleted + '"]').remove();
 				if($('.assignment').length === 0) {
 					$('#current-grade').replaceWith('<span id="no-assignments">You have no graded assignments.</span>');
+					$('#allAssignments').prepend('<div class="row information">\
+													<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">\
+														Add all completed and upcoming assignments. <a data-toggle="modal" data-target="#whyModal">Why?</a>\
+													</div>\
+												</div>');
 				} else {
 					$.post('/updateAssignmentGoal', { className : className, assignmentPercentages : assignmentPercentages, assignmentWeights : assignmentWeights, desiredGrade : desiredGrade }, function(data) {
 						var grades = $('.grade');
@@ -461,10 +487,10 @@
 		var assignmentName = assignmentFields[0];
 		var assignmentWeight = assignmentFields[1];
 		var assignmentPercentage = assignmentFields[2];
-		var className = $('#className').text();
+		var className = $('.className').text();
 		var desiredGrade = $('#desiredPercentageInput').val();
 
-		$.post('/addAssignment', { className : $('#className').text(),
+		$.post('/addAssignment', { className : $('.className').text(),
 								   assignmentName : assignmentName,
 								   assignmentWeight : assignmentWeight,
 								   assignmentPercentage : assignmentPercentage }, function(data) {
@@ -570,7 +596,6 @@
 	    </div>\
 	  </div>\
 	</div>');
-				console.log(data.currentGrade);
 				if(data.currentGrade) {
 					if($('#no-assignments').length > 0) {
 						$('#no-assignments').replaceWith('<span id="current-grade">Current Class Grade ≈' + data.currentGrade + ' %</span>')
@@ -582,11 +607,13 @@
 	   			$('#addAssignmentModal').modal('hide');
 				updateButtons();
 	   			} //end if(data)
+	   			$('.information').remove();
 	   			location.reload();
 
 	   		}); //end $.post()
 
 			} else if(data.err) {
+				$('.addassignmentalert-box').empty();
 				$('.addassignmentalert-box').prepend('<div class="alert alert-warning alert-dismissible" role="alert">\
 		        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
 		      ' + data.err + '\
@@ -608,10 +635,10 @@
 		assignmentPercentages.push($('.gradeGivenInput')[i].value);
 	   }
 
-		$.post('/updateDesiredGrade', { desiredGrade : desiredGrade, className : $('#className').text() }, function(data) {
+		$.post('/updateDesiredGrade', { desiredGrade : desiredGrade, className : $('.className').text() }, function(data) {
 			if(data.ok) {
 				console.log('update desired grade');
-				$.post('/updateAssignmentGoal', { className : $('#className').text(), assignmentPercentages : assignmentPercentages, assignmentWeights : assignmentWeights, desiredGrade : desiredGrade }, function(data) {
+				$.post('/updateAssignmentGoal', { className : $('.className').text(), assignmentPercentages : assignmentPercentages, assignmentWeights : assignmentWeights, desiredGrade : desiredGrade }, function(data) {
 
 					var grades = $('.grade');
 					var goals = $('.goal');
@@ -626,6 +653,7 @@
 					location.reload();
 				});
 			} else {
+				$('.main-alert-box').empty();
 				$('.main-alert-box').prepend('<div class="alert alert-warning alert-dismissible" role="alert">\
 		        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
 		      ' + data.err + '\

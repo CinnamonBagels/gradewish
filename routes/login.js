@@ -16,7 +16,7 @@ exports.validateLogin = function(req, res) {
 		if(data) {
 			if(data.password === fields.password) {
 				req.session.email = data.email;
-				req.session.version = Math.floor(Math.random() * 10) < 5 ? 'A' : 'B';
+				//req.session.version = Math.floor(Math.random() * 10) < 5 ? 'A' : 'B';
 				res.redirect('/classes');
 			} else {
 				res.send({
@@ -33,7 +33,7 @@ exports.validateLogin = function(req, res) {
 }
 
 exports.logout = function(req, res) {
-	req.session.email = null;
+	//req.session.email = null;
 	req.session.version = null;
 	res.redirect('/');
 }

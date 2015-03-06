@@ -1,19 +1,13 @@
-<div class="row" id="title">
-	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-		<span class="title">Classes</span>
-	</div>
-</div>
-
 <div class="row">
 	<div id="classes" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
 				<div class="row">
-					<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+					<div class="col-lg-9 col-md-9 col-sm-9 col-xs-8">
 						Your Classes
 					</div>
-					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-						<a data-toggle="modal" data-target="#addClassModal" class="btn btn-success btn-block">+</a>
+					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 text-center">
+						<a data-toggle="modal" data-target="#addClassModal" class="btn btn-success btn-block">Add</a>
 					</div>
 				</div>
 			</div>
@@ -25,14 +19,14 @@
 						<a href="/classes/{{className}}" class="btn btn-primary btn-block btn-spaced btn-lg"><span class="button-text">{{className}}</span></a>
 					</div>
 					<div class=" col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">
-						<a for-class="{{className}}" class="btn btn-danger btn-block deleteClassButton btn-spaced btn-lg" data-toggle="modal" data-target="#deleteClassModal">Delete</a>
+						<a for-class="{{className}}" class="btn btn-danger btn-block deleteClassButton btn-spaced btn-lg" data-toggle="modal" data-target="#deleteClassModal">X</a>
 					</div>
 				</div>
 				{{/each}}	
 				{{else}}
 				<div class="row " id="no-classes" >
 					<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center">
-						<span>You currently have no classes</span>
+						<span class="addClassToBegin">Add a class to begin!</span>
 					</div>
 				</div>
 				{{/if}}
@@ -78,21 +72,23 @@
       			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 	      			<div class="input-group">
 	      				<label for="departmentName">Department Code</label>
-	      				<input type="text" class="form-control" name="departmentName" id="departmentName" maxlength="4">
+	      				<input type="text" class="form-control" placeholder="Ex: CSE" name="departmentName" id="departmentName" maxlength="4">
 	      			</div>
       			</div>
       			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
       				<div class="input-group">
       					<label for="courseNumber">Course Number</label>
-      					<input type="text" class="form-control" name="courseNumber" id="courseNumber" maxlength="3">
+      					<input type="text" class="form-control" placeholder="Ex: 101" name="courseNumber" id="courseNumber" maxlength="3">
       				</div>
       			</div>
       		</div>
+      		<hr>
       		<div class="row">
       			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      				<div class="input-group">
       					<label for="desiredGradeInput">Desired Percentage</label>
+      				<div class="input-group">
       					<input class="form-control" id="desiredGradeInput" type="text" placeholder="Desired Grade">
+      					<span class="input-group-addon">%</span>
       				</div>  
       			</div>
       		</div>
@@ -125,7 +121,7 @@
 				if($('.class').length === 0) {
 					$('.panel-body').append('<div class="row " id="no-classes" >\
 					<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12 text-center">\
-						<span>You currently have no classes</span>\
+						<span class="addClassToBegin">Add a class to begin!</span>\
 					</div>\
 				</div>');
 				}
@@ -159,6 +155,7 @@
 		}
 
 		if(hasError) {
+			$('.alert-box').empty();
 			$('.alert-box').prepend('<div class="alert alert-warning alert-dismissible" role="alert">\
 		        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
 		      ' + error + '\
@@ -175,7 +172,7 @@
 						<a href="/classes/' + data.className + '" class="btn btn-primary btn-lg btn-block btn-spaced"><span class="button-text">' + data.className + '</span></a>\
 					</div>\
 					<div class=" col-lg-4 col-md-4 col-sm-4 col-xs-4 text-center">\
-						<a for-class="' + data.className + '" class="btn btn-danger btn-lg btn-block deleteClassButton btn-spaced" data-toggle="modal" data-target="#deleteClassModal">Delete</a>\
+						<a for-class="' + data.className + '" class="btn btn-danger btn-lg btn-block deleteClassButton btn-spaced" data-toggle="modal" data-target="#deleteClassModal">X</a>\
 					</div>\
 				</div>');
 				redefineDelete();
@@ -184,6 +181,7 @@
 				}
 				$('#addClassModal').modal('hide');
 			} else if(data.err) {
+				$('.alert-box').empty();
 				$('.alert-box').prepend('<div class="alert alert-warning alert-dismissible" role="alert">\
 		        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
 		      ' + data.err + '\
